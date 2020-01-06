@@ -56,7 +56,12 @@ namespace PlayFab
             }
             std::string GetRequestContainerUrl() const
             {
-                return requestContainer->GetUrl();
+                CallRequestContainer* container = dynamic_cast<CallRequestContainer*>(requestContainer.get());
+                if (container != nullptr) {
+                    return container->GetFullUrl();
+                } else {
+                    return requestContainer->GetUrl();
+                }
             }
             void Cancel();
             std::atomic<State> state;
