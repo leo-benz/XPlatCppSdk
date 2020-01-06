@@ -18,7 +18,19 @@
 #endif // __linux__ && !__ANDROID__
 
 #ifdef __APPLE__
-#define PLAYFAB_PLATFORM_IOS
+    #include <TargetConditionals.h>
+    #if TARGET_IPHONE_SIMULATOR
+         // iOS Simulator
+        #define PLAYFAB_PLATFORM_IOS
+    #elif TARGET_OS_IPHONE
+        // iOS device
+        #define PLAYFAB_PLATFORM_IOS
+    #elif TARGET_OS_MAC
+        // Other kinds of Mac OS
+        #define PLAYFAB_PLATFORM_LINUX
+    #else
+    #   error "Unknown Apple platform"
+    #endif
 #endif // __APPLE__
 
 #ifdef __ANDROID__
